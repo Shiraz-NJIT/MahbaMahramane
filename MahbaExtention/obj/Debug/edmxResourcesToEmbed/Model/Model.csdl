@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MahbaMahramaneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Dossier">
+    <Key>
+      <PropertyRef Name="NN" />
+    </Key>
+    <Property Name="NN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CN" Type="Int32" Nullable="false" />
+    <Property Name="PN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Family" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FatherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Documents" Relationship="MahbaMahramaneModel.FK_Document_Document" FromRole="Dossier" ToRole="Document" />
+  </EntityType>
+  <EntityContainer Name="MahbaMahramaneEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Dossiers" EntityType="Self.Dossier" />
+    <FunctionImport Name="DeleteDossier">
+      <Parameter Name="NNDossier" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="ExistDossierByNN">
+      <Parameter Name="NNDossier" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetAllDocument" ReturnType="Collection(MahbaMahramaneModel.GetAllDocument_Result)" />
+    <FunctionImport Name="GetAllDossier" ReturnType="Collection(MahbaMahramaneModel.GetAllDossier_Result)" />
+    <FunctionImport Name="getDossierByNN" ReturnType="Collection(MahbaMahramaneModel.getDossierByNN_Result)">
+      <Parameter Name="NNDossier" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertDocument">
+      <Parameter Name="IDDocument" Mode="In" Type="Int64" />
+      <Parameter Name="NNDocument" Mode="In" Type="Int32" />
+      <Parameter Name="FileNameDocument" Mode="In" Type="String" />
+      <Parameter Name="AttachDocument" Mode="In" Type="Boolean" />
+      <Parameter Name="ParentDocument" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="InsertDossier">
+      <Parameter Name="NNDossier" Mode="In" Type="String" />
+      <Parameter Name="CNDossier" Mode="In" Type="Int32" />
+      <Parameter Name="PNDossier" Mode="In" Type="String" />
+      <Parameter Name="NameDossier" Mode="In" Type="String" />
+      <Parameter Name="FamilyDossier" Mode="In" Type="String" />
+      <Parameter Name="FatherNameDossier" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="Documents" EntityType="MahbaMahramaneModel.Document" />
+    <AssociationSet Name="FK_Document_Document" Association="MahbaMahramaneModel.FK_Document_Document">
+      <End Role="Dossier" EntitySet="Dossiers" />
+      <End Role="Document" EntitySet="Documents" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="GetAllDocument_Result">
+    <Property Type="Int64" Name="ID" Nullable="false" />
+    <Property Type="String" Name="NN" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="FileName" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="AttachedToDossier" Nullable="false" />
+    <Property Type="Int64" Name="ParentDocumentID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetAllDossier_Result">
+    <Property Type="String" Name="NN" Nullable="false" MaxLength="10" />
+    <Property Type="Int32" Name="CN" Nullable="false" />
+    <Property Type="String" Name="PN" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="Family" Nullable="false" />
+    <Property Type="String" Name="FatherName" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="getDossierByNN_Result">
+    <Property Type="String" Name="NN" Nullable="false" MaxLength="10" />
+    <Property Type="Int32" Name="CN" Nullable="false" />
+    <Property Type="String" Name="PN" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="Family" Nullable="false" />
+    <Property Type="String" Name="FatherName" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NN" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AttachedToDossier" Type="Boolean" Nullable="false" />
+    <Property Name="ParentDocumentID" Type="Int64" />
+    <NavigationProperty Name="Dossier" Relationship="MahbaMahramaneModel.FK_Document_Document" FromRole="Document" ToRole="Dossier" />
+  </EntityType>
+  <Association Name="FK_Document_Document">
+    <End Type="MahbaMahramaneModel.Dossier" Role="Dossier" Multiplicity="1" />
+    <End Type="MahbaMahramaneModel.Document" Role="Document" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dossier">
+        <PropertyRef Name="NN" />
+      </Principal>
+      <Dependent Role="Document">
+        <PropertyRef Name="NN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MahbaMahramaneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NN" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AttachedToDossier" Type="bit" Nullable="false" />
+    <Property Name="ParentDocumentID" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Dossier">
+    <Key>
+      <PropertyRef Name="NN" />
+    </Key>
+    <Property Name="NN" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="CN" Type="int" Nullable="false" />
+    <Property Name="PN" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Family" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FatherName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Document_Document">
+    <End Role="Dossier" Type="Self.Dossier" Multiplicity="1" />
+    <End Role="Document" Type="Self.Document" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dossier">
+        <PropertyRef Name="NN" />
+      </Principal>
+      <Dependent Role="Document">
+        <PropertyRef Name="NN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="DeleteDossier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NNDossier" Type="int" Mode="In" />
+  </Function>
+  <Function Name="ExistDossierByNN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NNDossier" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="GetAllDocument" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetAllDossier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="getDossierByNN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NNDossier" Type="int" Mode="In" />
+  </Function>
+  <Function Name="InsertDocument" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IDDocument" Type="bigint" Mode="In" />
+    <Parameter Name="NNDocument" Type="int" Mode="In" />
+    <Parameter Name="FileNameDocument" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="AttachDocument" Type="bit" Mode="In" />
+    <Parameter Name="ParentDocument" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="InsertDossier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="NNDossier" Type="nvarchar" Mode="In" />
+    <Parameter Name="CNDossier" Type="int" Mode="In" />
+    <Parameter Name="PNDossier" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="NameDossier" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="FamilyDossier" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="FatherNameDossier" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <EntityContainer Name="MahbaMahramaneModelStoreContainer">
+    <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dossier" EntityType="Self.Dossier" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Document_Document" Association="Self.FK_Document_Document">
+      <End Role="Dossier" EntitySet="Dossier" />
+      <End Role="Document" EntitySet="Document" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

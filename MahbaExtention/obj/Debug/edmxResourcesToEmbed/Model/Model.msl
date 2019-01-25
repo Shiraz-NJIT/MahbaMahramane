@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MahbaMahramaneModelStoreContainer" CdmEntityContainer="MahbaMahramaneEntities">
+    <EntitySetMapping Name="Dossiers">
+      <EntityTypeMapping TypeName="MahbaMahramaneModel.Dossier">
+        <MappingFragment StoreEntitySet="Dossier">
+          <ScalarProperty Name="NN" ColumnName="NN" />
+          <ScalarProperty Name="CN" ColumnName="CN" />
+          <ScalarProperty Name="PN" ColumnName="PN" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Family" ColumnName="Family" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DeleteDossier" FunctionName="MahbaMahramaneModel.Store.DeleteDossier" />
+    <FunctionImportMapping FunctionImportName="ExistDossierByNN" FunctionName="MahbaMahramaneModel.Store.ExistDossierByNN" />
+    <FunctionImportMapping FunctionImportName="GetAllDocument" FunctionName="MahbaMahramaneModel.Store.GetAllDocument">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MahbaMahramaneModel.GetAllDocument_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NN" ColumnName="NN" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="AttachedToDossier" ColumnName="AttachedToDossier" />
+          <ScalarProperty Name="ParentDocumentID" ColumnName="ParentDocumentID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetAllDossier" FunctionName="MahbaMahramaneModel.Store.GetAllDossier">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MahbaMahramaneModel.GetAllDossier_Result">
+          <ScalarProperty Name="NN" ColumnName="NN" />
+          <ScalarProperty Name="CN" ColumnName="CN" />
+          <ScalarProperty Name="PN" ColumnName="PN" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Family" ColumnName="Family" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getDossierByNN" FunctionName="MahbaMahramaneModel.Store.getDossierByNN">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MahbaMahramaneModel.getDossierByNN_Result">
+          <ScalarProperty Name="NN" ColumnName="NN" />
+          <ScalarProperty Name="CN" ColumnName="CN" />
+          <ScalarProperty Name="PN" ColumnName="PN" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Family" ColumnName="Family" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertDocument" FunctionName="MahbaMahramaneModel.Store.InsertDocument" />
+    <FunctionImportMapping FunctionImportName="InsertDossier" FunctionName="MahbaMahramaneModel.Store.InsertDossier" />
+    <EntitySetMapping Name="Documents">
+      <EntityTypeMapping TypeName="MahbaMahramaneModel.Document">
+        <MappingFragment StoreEntitySet="Document">
+          <ScalarProperty Name="ParentDocumentID" ColumnName="ParentDocumentID" />
+          <ScalarProperty Name="AttachedToDossier" ColumnName="AttachedToDossier" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="NN" ColumnName="NN" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

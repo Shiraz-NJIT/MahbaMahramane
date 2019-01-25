@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArchiveModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ArchiveSetting">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Background" Type="image" />
+    <Property Name="BackupPath" Type="nvarchar" MaxLength="250" />
+    <Property Name="AutoBackup" Type="bit" Nullable="false" />
+    <Property Name="OrganName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Logo" Type="image" />
+    <Property Name="DocumentsPathOrDatabaseName" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="PersonnelNumber_Label" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PersonnelNumber_MinLength" Type="int" Nullable="false" />
+    <Property Name="PersonnelNumber_MaxLength" Type="int" Nullable="false" />
+    <Property Name="InfoGroupTab" Type="bit" Nullable="false" />
+    <Property Name="UseDatabase" Type="bit" Nullable="false" />
+    <Property Name="DatabasePath" Type="nvarchar" MaxLength="250" />
+    <Property Name="DefaultFilesSavePath" Type="nvarchar" MaxLength="250" />
+    <Property Name="DefaultImageFormatCode" Type="int" />
+    <Property Name="DefaultCompressionTypeCode" Type="int" />
+    <Property Name="MaxDocumentsSize" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PersonnelNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ArchiveTabID" Type="int" />
+    <Property Name="AttachedToDossier" Type="bit" Nullable="false" />
+    <Property Name="ParentDocumentID" Type="int" />
+    <Property Name="Index" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dossier">
+    <Key>
+      <PropertyRef Name="PersonnelNumber" />
+    </Key>
+    <Property Name="PersonnelNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PersonnelImage" Type="image" />
+    <Property Name="FilesPathOrDatabaseName" Type="nvarchar(max)" />
+    <Property Name="DossierSecurityID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dossier1">
+    <Key>
+      <PropertyRef Name="PersonnelNumber" />
+    </Key>
+    <Property Name="PersonnelNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Field1" Type="char" MaxLength="12" />
+    <Property Name="Field2" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Field3" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Field4" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Field5" Type="int" />
+  </EntityType>
+  <Association Name="FK_Document_Document">
+    <End Role="Document" Type="Self.Document" Multiplicity="0..1" />
+    <End Role="Document1" Type="Self.Document" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Document">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Document1">
+        <PropertyRef Name="ParentDocumentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Document_Dossier">
+    <End Role="Dossier" Type="Self.Dossier" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Document" Type="Self.Document" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dossier">
+        <PropertyRef Name="PersonnelNumber" />
+      </Principal>
+      <Dependent Role="Document">
+        <PropertyRef Name="PersonnelNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dossier1_Dossier">
+    <End Role="Dossier" Type="Self.Dossier" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Dossier1" Type="Self.Dossier1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Dossier">
+        <PropertyRef Name="PersonnelNumber" />
+      </Principal>
+      <Dependent Role="Dossier1">
+        <PropertyRef Name="PersonnelNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ArchiveModelStoreContainer">
+    <EntitySet Name="ArchiveSetting" EntityType="Self.ArchiveSetting" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dossier" EntityType="Self.Dossier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dossier1" EntityType="Self.Dossier1" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Document_Document" Association="Self.FK_Document_Document">
+      <End Role="Document" EntitySet="Document" />
+      <End Role="Document1" EntitySet="Document" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Document_Dossier" Association="Self.FK_Document_Dossier">
+      <End Role="Dossier" EntitySet="Dossier" />
+      <End Role="Document" EntitySet="Document" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dossier1_Dossier" Association="Self.FK_Dossier1_Dossier">
+      <End Role="Dossier" EntitySet="Dossier" />
+      <End Role="Dossier1" EntitySet="Dossier1" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArchiveModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ArchiveSetting">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Background" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="BackupPath" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="AutoBackup" Type="Boolean" Nullable="false" />
+    <Property Name="OrganName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Logo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="DocumentsPathOrDatabaseName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PersonnelNumber_Label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PersonnelNumber_MinLength" Type="Int32" Nullable="false" />
+    <Property Name="PersonnelNumber_MaxLength" Type="Int32" Nullable="false" />
+    <Property Name="InfoGroupTab" Type="Boolean" Nullable="false" />
+    <Property Name="UseDatabase" Type="Boolean" Nullable="false" />
+    <Property Name="DatabasePath" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="DefaultFilesSavePath" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="DefaultImageFormatCode" Type="Int32" />
+    <Property Name="DefaultCompressionTypeCode" Type="Int32" />
+    <Property Name="MaxDocumentsSize" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonnelNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ArchiveTabID" Type="Int32" />
+    <Property Name="AttachedToDossier" Type="Boolean" Nullable="false" />
+    <Property Name="ParentDocumentID" Type="Int32" />
+    <Property Name="Index" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Document1" Relationship="Self.FK_Document_Document" FromRole="Document" ToRole="Document1" />
+    <NavigationProperty Name="Document2" Relationship="Self.FK_Document_Document" FromRole="Document1" ToRole="Document" />
+    <NavigationProperty Name="Dossier" Relationship="Self.FK_Document_Dossier" FromRole="Document" ToRole="Dossier" />
+  </EntityType>
+  <EntityType Name="Dossier">
+    <Key>
+      <PropertyRef Name="PersonnelNumber" />
+    </Key>
+    <Property Name="PersonnelNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PersonnelImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="FilesPathOrDatabaseName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DossierSecurityID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Documents" Relationship="Self.FK_Document_Dossier" FromRole="Dossier" ToRole="Document" />
+    <NavigationProperty Name="Dossier1" Relationship="Self.FK_Dossier1_Dossier" FromRole="Dossier" ToRole="Dossier1" />
+  </EntityType>
+  <EntityType Name="Dossier1">
+    <Key>
+      <PropertyRef Name="PersonnelNumber" />
+    </Key>
+    <Property Name="PersonnelNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Field1" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+    <Property Name="Field2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Field3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Field4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Field5" Type="Int32" />
+    <NavigationProperty Name="Dossier" Relationship="Self.FK_Dossier1_Dossier" FromRole="Dossier1" ToRole="Dossier" />
+  </EntityType>
+  <Association Name="FK_Document_Document">
+    <End Role="Document" Type="Self.Document" Multiplicity="0..1" />
+    <End Role="Document1" Type="Self.Document" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Document">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Document1">
+        <PropertyRef Name="ParentDocumentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Document_Dossier">
+    <End Role="Dossier" Type="Self.Dossier" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Document" Type="Self.Document" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dossier">
+        <PropertyRef Name="PersonnelNumber" />
+      </Principal>
+      <Dependent Role="Document">
+        <PropertyRef Name="PersonnelNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dossier1_Dossier">
+    <End Role="Dossier" Type="Self.Dossier" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Dossier1" Type="Self.Dossier1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Dossier">
+        <PropertyRef Name="PersonnelNumber" />
+      </Principal>
+      <Dependent Role="Dossier1">
+        <PropertyRef Name="PersonnelNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MahbaArchiveEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ArchiveSettings" EntityType="Self.ArchiveSetting" />
+    <EntitySet Name="Documents" EntityType="Self.Document" />
+    <EntitySet Name="Dossiers" EntityType="Self.Dossier" />
+    <EntitySet Name="Dossier1" EntityType="Self.Dossier1" />
+    <AssociationSet Name="FK_Document_Document" Association="Self.FK_Document_Document">
+      <End Role="Document" EntitySet="Documents" />
+      <End Role="Document1" EntitySet="Documents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Document_Dossier" Association="Self.FK_Document_Dossier">
+      <End Role="Dossier" EntitySet="Dossiers" />
+      <End Role="Document" EntitySet="Documents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dossier1_Dossier" Association="Self.FK_Dossier1_Dossier">
+      <End Role="Dossier" EntitySet="Dossiers" />
+      <End Role="Dossier1" EntitySet="Dossier1" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

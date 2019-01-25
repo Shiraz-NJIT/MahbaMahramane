@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ArchiveModelStoreContainer" CdmEntityContainer="MahbaArchiveEntities">
+    <EntitySetMapping Name="ArchiveSettings">
+      <EntityTypeMapping TypeName="ArchiveModel.ArchiveSetting">
+        <MappingFragment StoreEntitySet="ArchiveSetting">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Background" ColumnName="Background" />
+          <ScalarProperty Name="BackupPath" ColumnName="BackupPath" />
+          <ScalarProperty Name="AutoBackup" ColumnName="AutoBackup" />
+          <ScalarProperty Name="OrganName" ColumnName="OrganName" />
+          <ScalarProperty Name="Logo" ColumnName="Logo" />
+          <ScalarProperty Name="DocumentsPathOrDatabaseName" ColumnName="DocumentsPathOrDatabaseName" />
+          <ScalarProperty Name="PersonnelNumber_Label" ColumnName="PersonnelNumber_Label" />
+          <ScalarProperty Name="PersonnelNumber_MinLength" ColumnName="PersonnelNumber_MinLength" />
+          <ScalarProperty Name="PersonnelNumber_MaxLength" ColumnName="PersonnelNumber_MaxLength" />
+          <ScalarProperty Name="InfoGroupTab" ColumnName="InfoGroupTab" />
+          <ScalarProperty Name="UseDatabase" ColumnName="UseDatabase" />
+          <ScalarProperty Name="DatabasePath" ColumnName="DatabasePath" />
+          <ScalarProperty Name="DefaultFilesSavePath" ColumnName="DefaultFilesSavePath" />
+          <ScalarProperty Name="DefaultImageFormatCode" ColumnName="DefaultImageFormatCode" />
+          <ScalarProperty Name="DefaultCompressionTypeCode" ColumnName="DefaultCompressionTypeCode" />
+          <ScalarProperty Name="MaxDocumentsSize" ColumnName="MaxDocumentsSize" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Documents">
+      <EntityTypeMapping TypeName="ArchiveModel.Document">
+        <MappingFragment StoreEntitySet="Document">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PersonnelNumber" ColumnName="PersonnelNumber" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="ArchiveTabID" ColumnName="ArchiveTabID" />
+          <ScalarProperty Name="AttachedToDossier" ColumnName="AttachedToDossier" />
+          <ScalarProperty Name="ParentDocumentID" ColumnName="ParentDocumentID" />
+          <ScalarProperty Name="Index" ColumnName="Index" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dossiers">
+      <EntityTypeMapping TypeName="ArchiveModel.Dossier">
+        <MappingFragment StoreEntitySet="Dossier">
+          <ScalarProperty Name="PersonnelNumber" ColumnName="PersonnelNumber" />
+          <ScalarProperty Name="PersonnelImage" ColumnName="PersonnelImage" />
+          <ScalarProperty Name="FilesPathOrDatabaseName" ColumnName="FilesPathOrDatabaseName" />
+          <ScalarProperty Name="DossierSecurityID" ColumnName="DossierSecurityID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dossier1">
+      <EntityTypeMapping TypeName="ArchiveModel.Dossier1">
+        <MappingFragment StoreEntitySet="Dossier1">
+          <ScalarProperty Name="PersonnelNumber" ColumnName="PersonnelNumber" />
+          <ScalarProperty Name="Field1" ColumnName="Field1" />
+          <ScalarProperty Name="Field2" ColumnName="Field2" />
+          <ScalarProperty Name="Field3" ColumnName="Field3" />
+          <ScalarProperty Name="Field4" ColumnName="Field4" />
+          <ScalarProperty Name="Field5" ColumnName="Field5" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

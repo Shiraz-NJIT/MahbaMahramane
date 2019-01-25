@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PhotoAlbumModelStoreContainer" CdmEntityContainer="PhotoAlbumEntities">
+    <EntitySetMapping Name="Documents">
+      <EntityTypeMapping TypeName="PhotoAlbumModel.Document">
+        <MappingFragment StoreEntitySet="Document">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NN" ColumnName="NN" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="AttachedToDossier" ColumnName="AttachedToDossier" />
+          <ScalarProperty Name="ParentDocumentID" ColumnName="ParentDocumentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dossiers">
+      <EntityTypeMapping TypeName="PhotoAlbumModel.Dossier">
+        <MappingFragment StoreEntitySet="Dossier">
+          <ScalarProperty Name="NN" ColumnName="NN" />
+          <ScalarProperty Name="CN" ColumnName="CN" />
+          <ScalarProperty Name="PN" ColumnName="PN" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Family" ColumnName="Family" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

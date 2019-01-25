@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PhotoAlbumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AttachedToDossier" Type="Boolean" Nullable="false" />
+    <Property Name="ParentDocumentID" Type="Int64" />
+    <NavigationProperty Name="Dossier" Relationship="Self.FK__Document__NN__1273C1CD" FromRole="Document" ToRole="Dossier" />
+  </EntityType>
+  <EntityType Name="Dossier">
+    <Key>
+      <PropertyRef Name="NN" />
+    </Key>
+    <Property Name="NN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CN" Type="Int32" Nullable="false" />
+    <Property Name="PN" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Family" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FatherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Documents" Relationship="Self.FK__Document__NN__1273C1CD" FromRole="Dossier" ToRole="Document" />
+  </EntityType>
+  <Association Name="FK__Document__NN__1273C1CD">
+    <End Role="Dossier" Type="Self.Dossier" Multiplicity="1" />
+    <End Role="Document" Type="Self.Document" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dossier">
+        <PropertyRef Name="NN" />
+      </Principal>
+      <Dependent Role="Document">
+        <PropertyRef Name="NN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PhotoAlbumEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Documents" EntityType="Self.Document" />
+    <EntitySet Name="Dossiers" EntityType="Self.Dossier" />
+    <AssociationSet Name="FK__Document__NN__1273C1CD" Association="Self.FK__Document__NN__1273C1CD">
+      <End Role="Dossier" EntitySet="Dossiers" />
+      <End Role="Document" EntitySet="Documents" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
